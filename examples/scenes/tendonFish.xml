@@ -1,0 +1,115 @@
+
+<mujoco model="Fish">
+    <option gravity="0 0 0" density="1000" viscosity="0.0013" integrator="implicit" timestep="0.001" iterations="100" solver="Newton" tolerance="1e-15" o_solimp="0 0.01 0.01 0.1 2">
+        <flag contact="disable"/>
+        <!-- <flag override="enable"/> -->
+    </option>
+
+    <visual>
+        <map force="0.1" zfar="30"/>
+        <rgba haze="0.15 0.25 0.35 1"/>
+        <global offwidth="2560" offheight="1440" elevation="-20" azimuth="120"/>
+    </visual>
+
+    <statistic center="0 0 0.7"/>
+
+    <asset>
+        <texture type="skybox" builtin="gradient" rgb1=".3 .5 .7" rgb2="0 0 0" width="32" height="512"/>
+        <texture name="body" type="cube" builtin="flat" mark="cross" width="127" height="127" rgb1="0.8 0.6 0.4" rgb2="0.8 0.6 0.4" markrgb="1 1 1" random="0.01"/>
+        <material name="body" texture="body" texuniform="true" rgba="0.8 0.6 .4 1"/>
+        <texture name="grid" type="2d" builtin="checker" width="512" height="512" rgb1=".1 .2 .3" rgb2=".2 .3 .4"/>
+        <material name="grid" texture="grid" texrepeat="1 1" texuniform="true" reflectance=".2"/>
+
+        <mesh name="finTop" file="fish/finTop.obj"/>
+        <mesh name="finTail" file="fish/finTail.obj"/>
+
+        <texture name="acrylic" type="cube" builtin="flat" mark="cross" width="127" height="127" rgb1=".9 .9 .9" rgb2=".9 .9 .9" markrgb="1 1 1" random="0.01"/>
+        <material name="acrylic" texture="acrylic" texuniform="true"/>
+
+        <texture name="alu" type="cube" builtin="flat" mark="cross" width="127" height="127" rgb1=".7 .7 .7" rgb2=".7 .7 .7" markrgb="1 1 1" random="0.01"/>
+        <material name="alu" texture="alu" texuniform="true"/>
+        
+        <texture name="marker" type="cube" builtin="flat" mark="cross" width="127" height="127" rgb1=".9 .4 .1" rgb2=".9 .4 .1" markrgb="1 1 1" random="0.01"/>
+        <material name="marker" texture="marker" texuniform="true"/>
+    </asset>
+
+    <default>
+        <motor ctrlrange="-1 1" ctrllimited="true"/>
+        
+        <default class="body">
+            <!-- geoms -->
+            <geom type="capsule" condim="1" friction=".7" solimp=".9 .99 .003" solref=".015 1" material="body"/>
+            
+        </default>
+
+        <joint type="hinge" pos="0 0 0" axis="0 0 1" range="-80 80" stiffness="0.65" damping="0.0"/>
+        <geom fluidcoef="0.1 0.1 0.1 2.0 1.0" condim="1"/>
+        <tendon width="0.001" rgba=".9 .6 .5 1" stiffness="20000" damping="10"/>
+    </default>
+
+
+    <worldbody>
+        <geom name="floor" pos="0 0 -0.2" size="0 0 .05" type="plane" material="grid"/>
+        <light name="spotlight" mode="targetbodycom" target="torso" diffuse=".8 .8 .8" specular="0.3 0.3 0.3" pos="0 -6 4" cutoff="30"/>
+
+        <body name="torso" pos="0 0 1.282" childclass="body">
+            <light name="top" pos="0 0 2" mode="trackcom"/>
+            <camera name="back" pos="-3 0 1" xyaxes="0 -1 0 1 0 2" mode="trackcom"/>
+            <camera name="side" pos="0 -3 1" xyaxes="1 0 0 0 1 2" mode="trackcom"/>
+
+            <!-- <freejoint name="root"/> -->
+            <geom name="torso" fromto="0 -.07 0 0 .07 0" size=".07"/>
+            <geom name="waist_upper" fromto="-.01 -.06 -.12 -.01 .06 -.12" size=".06"/>
+
+            <body name="head" pos="0 0 .19">
+                <geom name="head" type="sphere" size=".19"/>
+                <camera name="egocentric" pos=".09 0 0" xyaxes="0 -1 0 .1 0 1" fovy="80"/>
+            </body>
+        </body>
+
+
+        <body pos="0 0 0">
+            <freejoint/>
+
+            <site name="COM" pos="0.02432519 0 0.00306519" size="0.02" material="marker"/>
+
+            <geom name="headPlate" type="box" pos="0 0 0" size="0.077 0.0025 0.05" material="acrylic" density="1180" fluidshape="ellipsoid"/>
+            <geom name="headTopPlate" type="box" pos="0.01 0 0.0515" size="0.08 0.02 0.0015" material="acrylic" density="1180"/>
+            <geom name="headTopElectric" type="box" pos="0.005 0 0.083" size="0.06 0.04 0.03" material="acrylic"/>
+            <geom name="headAttachment" type="box" pos="0.1 0 0" size="0.023 0.015 0.05" material="alu" mass="0.08" fluidshape="ellipsoid"/>
+
+            <geom name="body" type="box" pos="0.2005 0 0" size="0.0775 0.01 0.0525" material="alu" mass="0.6" fluidshape="ellipsoid"/>
+            <geom name="body-joint0" type="box" pos="0.28150000000000003 0 0" size="0.0035 0.0005 0.0375" material="acrylic" mass="0.001" fluidshape="ellipsoid"/>
+
+            <geom name="finTop" type="mesh" mesh="finTop" pos="0.26 0 0.04" material="acrylic" density="1180"/>
+
+            <site name="marker0" pos="-0.077 0 0.05" size="0.005" material="marker"/>
+            <site name="marker1" pos="0.065 0 0.05" size="0.005" material="marker"/>
+            <site name="marker2" pos="0.1655 -0.0775 0.05" size="0.005" material="marker"/>
+            <site name="marker3" pos="0.1655 0.0775 0.05" size="0.005" material="marker"/>
+            <site name="bodyFin" pos="0.28 0 0.1" size="0.005" material="marker"/>
+
+
+            <body pos="0.1655 0 0" name="motor">
+                <joint name="motor" type="hinge" axis="0 1 0" pos="0 0 0" limited="false" stiffness="0" damping="0"/>
+                
+                <geom name="motorShaft" type="box" pos="0 0 0" size="0.0075 0.06 0.0075" material="acrylic"  mass="0.05" fluidshape="ellipsoid"/>
+                <geom name="motorArmLeft" type="box" pos="0 -0.055 -0.01975" size="0.0075 0.005 0.01975" material="acrylic" density="1250" fluidshape="ellipsoid"/>
+                <geom name="motorArmRight" type="box" pos="0 0.055 0.01975" size="0.0075 0.005 0.01975" material="acrylic" density="1250" fluidshape="ellipsoid"/>
+
+                <site name="bodyLeft" pos="0 -0.055 -0.0345" size="0.005" rgba=".9 .6 .5 .5"/>
+                <site name="bodyRight" pos="0 0.055 0.0345" size="0.005" rgba=".9 .6 .5 .5"/>
+            </body>
+            
+
+
+        </body>
+
+    </worldbody>
+
+    <actuator>
+        <!-- <position name="motor" joint="motor" kp="1000" kv="10" ctrllimited="true" ctrlrange="-inf inf" forcerange="-100 100"/> -->
+        <velocity name="motor" joint="motor" kv="100" ctrllimited="true" ctrlrange="-100 100"/>
+    </actuator>
+
+</mujoco>

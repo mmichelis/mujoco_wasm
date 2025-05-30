@@ -29,7 +29,7 @@ export function setupGUI(parentContext) {
   parentContext.gui.add(parentContext.params, 'scene', {
     "Humanoid": "humanoid.xml", "Cassie": "agility_cassie/scene.xml",
     "Hammock": "hammock.xml", "Balloons": "balloons.xml", "Hand": "shadow_hand/scene_right.xml",
-    "Flag": "flag.xml", "Mug": "mug.xml", "Tendon": "model_with_tendon.xml", "Fish": "fish/test.xml",
+    "Flag": "flag.xml", "Mug": "mug.xml", "Tendon": "model_with_tendon.xml", "Fish": "tendonFish.xml",
   }).name('Example Scene').onChange(reload);
 
   // Add a help menu.
@@ -591,10 +591,9 @@ export async function downloadExampleScenesFolder(mujoco) {
     "simple.xml",
     "slider_crank.xml",
     "model_with_tendon.xml",
-    "fish/tendonFish.xml",
     "fish/finTail.obj",
     "fish/finTop.obj",
-    "fish/test.xml",
+    "tendonFish.xml",
   ];
 
   let requests = allFiles.map((url) => fetch("./examples/scenes/" + url));
