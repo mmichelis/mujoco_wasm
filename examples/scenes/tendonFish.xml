@@ -34,14 +34,6 @@
     </asset>
 
     <default>
-        <motor ctrlrange="-1 1" ctrllimited="true"/>
-        
-        <default class="body">
-            <!-- geoms -->
-            <geom type="capsule" condim="1" friction=".7" solimp=".9 .99 .003" solref=".015 1" material="body"/>
-            
-        </default>
-
         <joint type="hinge" pos="0 0 0" axis="0 0 1" limited="true" range="-80 80" stiffness="0.65" damping="0.0"/>
         <geom fluidcoef="0.1 0.1 0.1 2.0 1.0" condim="1"/>
         <tendon width="0.001" rgba=".9 .6 .5 1" stiffness="20000" damping="10"/>
@@ -50,26 +42,18 @@
 
     <worldbody>
         <geom name="floor" pos="0 0 -0.2" size="0 0 .05" type="plane" material="grid"/>
-        <light name="spotlight" mode="targetbodycom" target="torso" diffuse=".8 .8 .8" specular="0.3 0.3 0.3" pos="0 -6 4" cutoff="30"/>
+        <light name="spotlight" mode="targetbodycom" target="fish" diffuse=".8 .8 .8" specular="0.3 0.3 0.3" pos="0 -6 4" cutoff="30"/>
 
-        <body name="torso" pos="0 0 1.282" childclass="body">
-            <light name="top" pos="0 0 2" mode="trackcom"/>
-            <camera name="back" pos="-3 0 1" xyaxes="0 -1 0 1 0 2" mode="trackcom"/>
-            <camera name="side" pos="0 -3 1" xyaxes="1 0 0 0 1 2" mode="trackcom"/>
+        <body pos="0 0 0" name="fish">
+            <joint name="headX" pos="0.02432519 0 0.00306519" type="slide" axis="1 0 0" stiffness="0" damping="0"/>
+            <joint name="headY" pos="0.02432519 0 0.00306519" type="slide" axis="0 1 0" stiffness="0" damping="0"/>
+            <joint name="headZ" pos="0.02432519 0 0.00306519" type="slide" axis="0 0 1" stiffness="100" damping="10"/>
 
-            <!-- <freejoint name="root"/> -->
-            <geom name="torso" fromto="0 -.07 0 0 .07 0" size=".07"/>
-            <geom name="waist_upper" fromto="-.01 -.06 -.12 -.01 .06 -.12" size=".06"/>
-
-            <body name="head" pos="0 0 .19">
-                <geom name="head" type="sphere" size=".1"/>
-                <camera name="egocentric" pos=".09 0 0" xyaxes="0 -1 0 .1 0 1" fovy="80"/>
-            </body>
-        </body>
+            <joint name="headRollX" type="hinge" pos="0.02432519 0 0.00306519" axis="1 0 0" range="-180 180" stiffness="10" damping="1"/>
+            <joint name="headRollY" type="hinge" pos="0.02432519 0 0.00306519" axis="0 1 0" range="-180 180" stiffness="10" damping="1"/>
+            <joint name="headRollZ" type="hinge" pos="0.02432519 0 0.00306519" axis="0 0 1" range="-180 180" stiffness="0" damping="0"/>
 
 
-        <body pos="0 0 0">
-            <freejoint/>
 
             <site name="COM" pos="0.02432519 0 0.00306519" size="0.02" material="marker"/>
 
