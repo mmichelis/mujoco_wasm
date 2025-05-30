@@ -28,6 +28,12 @@ This repo is a fork of @stillonearth 's starter repository, adding tons of funct
 
 **1. Install emscripten**
 
+```bash
+cd emsdk
+./emsdk install 3.1.56
+./emsdk activate 3.1.56
+```
+
 **2. Autogenerate the bindings by running src/parse_mjxmacro.py**
 
 **3. Build the mujoco_wasm Binary**
