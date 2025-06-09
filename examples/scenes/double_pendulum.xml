@@ -1,0 +1,81 @@
+
+<mujoco model="pendulum">
+    <option gravity="0 0 -9.81" integrator="implicit" timestep="0.0001" iterations="1000" solver="Newton" tolerance="1e-18" noslip_tolerance="1e-9" o_solref="0.001 1" o_solimp="0.5 0.999 0.0001 0.1 6">
+        <!-- <flag contact="disable"/> -->
+    </option>
+
+    <visual>
+        <global offheight="2160" offwidth="3840"/>
+        <rgba haze=".3 .3 .3 1"/>
+    </visual>
+
+    <asset>
+        <texture type="skybox" builtin="gradient" rgb1="0.6 0.6 0.6" rgb2="0 0 0" width="512" height="512"/>
+        <texture name="texplane" type="2d" builtin="checker" rgb1=".15 .2 .35" rgb2=".2 .3 .45" width="512" height="512" mark="cross" markrgb=".8 .8 .8"/>
+        <material name="matplane" reflectance="0.3" texture="texplane" texrepeat="10 10" texuniform="true"/>
+
+        <material name="plate" rgba=".9 .9 .9 .5"/>
+        <material name="pendulum" rgba=".9 .4 .1 .7"/>
+        <material name="mass" rgba=".1 .1 .1 1"/>
+    </asset>
+
+    <default>
+        <geom condim="3" friction="1 0.005 0.0001"/>
+    </default>
+
+
+    <worldbody>
+        <camera name="fixed" pos="0.0 -0.8 0.15" xyaxes="1 0 0 0 0.1 1"/>
+
+        <geom name="floor" pos="0 0 0" size="0 0 1" type="plane" material="matplane"/>
+        <light directional="true" diffuse=".8 .8 .8" specular=".2 .2 .2" pos="0 0 5" dir="0 0 -1"/>
+
+        <body pos="0 0 0.05">
+            <joint name="plate" type="slide" axis="1 0 0" pos="0 0 0" stiffness="0"/>
+            <geom name="plate" type="box" pos="0 0 0" size="0.2 0.1 0.005" material="plate" mass="0.1"/>
+        </body>
+
+
+        <body pos="-0.1 0 0.055">
+            <joint name="p1boxX" type="slide" axis="1 0 0" pos="0 0 0"/>
+            <joint name="p1boxZ" type="slide" axis="0 0 1" pos="0 0 0"/>
+
+            <geom name="p1box" type="box" pos="0 0.02 0.075" size="0.03 0.02 0.075" material="pendulum" mass="0.1"/>
+            
+            <body pos="0 0 0.05">
+                <joint name="p1hinge" type="hinge" pos="0 0 -0.001" axis="0 1 0"/>
+                <geom name="p1hinge" type="cylinder" pos="0 -0.0001 -0.001" size="0.005 0.0001" zaxis="0 1 0" rgba=".7 .3 .1 1" mass= "0.001"/>
+
+                <geom name="p1stick" type="box" pos="0 -0.0012 0.02" size="0.002 0.001 0.06" material="mass" mass="0.001"/>
+
+                <geom name="p1massLower" type="cylinder" pos="0 -0.0012 -0.04" size="0.005 0.001" zaxis="0 1 0" material="mass" mass="0.3"/>
+                <geom name="p1massUpper" type="cylinder" pos="0 -0.0012 0.02" size="0.005 0.001" zaxis="0 1 0" material="mass" mass="0.1"/>
+            </body>
+        </body>
+
+        <body pos="0.1 0 0.055">
+            <joint name="p2boxX" type="slide" axis="1 0 0" pos="0 0 0"/>
+            <joint name="p2boxZ" type="slide" axis="0 0 1" pos="0 0 0"/>
+
+            <geom name="p2box" type="box" pos="0 0.02 0.075" size="0.03 0.02 0.075" material="pendulum" mass="0.1"/>
+            
+            <body pos="0 0 0.05">
+                <joint name="p2hinge" type="hinge" pos="0 0 -0.001" axis="0 1 0"/>
+                <geom name="p2hinge" type="cylinder" pos="0 -0.0001 -0.001" size="0.005 0.0001" zaxis="0 1 0" rgba=".7 .3 .1 1" mass= "0.001"/>
+
+                <geom name="p2stick" type="box" pos="0 -0.0012 0.02" size="0.002 0.001 0.06" material="mass" mass="0.001"/>
+
+                <geom name="p2massLower" type="cylinder" pos="0 -0.0012 -0.04" size="0.005 0.001" zaxis="0 1 0" material="mass" mass="0.3"/>
+                <geom name="p2massUpper" type="cylinder" pos="0 -0.0012 0.02" size="0.005 0.001" zaxis="0 1 0" material="mass" mass="0.1"/>
+            </body>
+        </body>
+
+    </worldbody>
+
+    <keyframe>
+        <key name="0" qpos="0 0 0 0 0 0 0"/>
+        <key name="1" qpos="0 0 0 0.1 0 0 0.4"/>
+        <key name="2" qpos="0 0 0 -0.7 0 0 0.4"/>
+    </keyframe>
+</mujoco>
+    

@@ -1,51 +1,47 @@
 
-<mujoco model="Fish">
-    <option gravity="0 0 0" density="1000" viscosity="0.0013" integrator="implicit" timestep="0.001" iterations="100" solver="Newton" tolerance="1e-15" o_solimp="0 0.01 0.01 0.1 2">
+<mujoco model="tendonFish">
+    <option gravity="0 0 0" density="1000" viscosity="0.0013" integrator="implicitfast" timestep="0.001" iterations="100" solver="Newton" tolerance="1e-15" ls_tolerance="1e-9" noslip_tolerance="1e-9" o_solimp="0 0.01 0.01 0.1 2">
         <flag contact="disable"/>
         <!-- <flag override="enable"/> -->
     </option>
 
     <visual>
-        <map force="0.1" zfar="30"/>
-        <rgba haze="0.15 0.25 0.35 1"/>
-        <global offwidth="2560" offheight="1440" elevation="-20" azimuth="120"/>
+        <global offheight="2160" offwidth="3840"/>
+        <rgba haze=".3 .3 .3 1"/>
     </visual>
 
-    <statistic center="0 0 0.7"/>
-
     <asset>
-        <texture type="skybox" builtin="gradient" rgb1=".3 .5 .7" rgb2="0 0 0" width="32" height="512"/>
-        <texture name="body" type="cube" builtin="flat" mark="cross" width="127" height="127" rgb1="0.8 0.6 0.4" rgb2="0.8 0.6 0.4" markrgb="1 1 1" random="0.01"/>
-        <material name="body" texture="body" texuniform="true" rgba="0.8 0.6 .4 1"/>
-        <texture name="grid" type="2d" builtin="checker" width="512" height="512" rgb1=".1 .2 .3" rgb2=".2 .3 .4"/>
-        <material name="grid" texture="grid" texrepeat="1 1" texuniform="true" reflectance=".2"/>
+        <texture type="skybox" builtin="gradient" rgb1="0.6 0.6 0.6" rgb2="0 0 0" width="512" height="512"/>
+        <texture name="texplane" type="2d" builtin="checker" rgb1=".15 .2 .35" rgb2=".2 .3 .45" width="512" height="512" mark="cross" markrgb=".8 .8 .8"/>
+        <material name="matplane" reflectance="0.3" texture="texplane" texrepeat="10 10" texuniform="true"/>
+        <mesh name="finTop" file="finTop.obj"/>
+        <mesh name="finTail" file="finTail.obj"/>
 
-        <mesh name="finTop" file="fish/finTop.obj"/>
-        <mesh name="finTail" file="fish/finTail.obj"/>
-
-        <texture name="acrylic" type="cube" builtin="flat" mark="cross" width="127" height="127" rgb1=".9 .9 .9" rgb2=".9 .9 .9" markrgb="1 1 1" random="0.01"/>
-        <material name="acrylic" texture="acrylic" texuniform="true"/>
-
-        <texture name="alu" type="cube" builtin="flat" mark="cross" width="127" height="127" rgb1=".7 .7 .7" rgb2=".7 .7 .7" markrgb="1 1 1" random="0.01"/>
-        <material name="alu" texture="alu" texuniform="true"/>
-        
-        <texture name="marker" type="cube" builtin="flat" mark="cross" width="127" height="127" rgb1=".9 .4 .1" rgb2=".9 .4 .1" markrgb="1 1 1" random="0.01"/>
-        <material name="marker" texture="marker" texuniform="true"/>
+        <material name="acrylic" rgba=".9 .9 .9 0.2"/>
+        <material name="alu" reflectance="0.9" specular="0.9" shininess="0.9" rgba=".7 .7 .7 1"/>
+        <material name="marker" rgba=".9 .4 .1 .5"/>
     </asset>
 
+
     <default>
-        <joint type="hinge" pos="0 0 0" axis="0 0 1" limited="true" range="-80 80" stiffness="0.65" damping="0.0"/>
+        <joint type="hinge" pos="0 0 0" axis="0 0 1" range="-80 80" stiffness="0.65" damping="0.0"/>
         <geom fluidcoef="0.1 0.1 0.1 2.0 1.0" condim="1"/>
         <tendon width="0.001" rgba=".9 .6 .5 1" stiffness="20000" damping="10"/>
     </default>
-
+    
 
     <worldbody>
-        <geom name="floor" pos="0 0 -0.2" size="0 0 .05" type="plane" material="grid"/>
-        <light name="spotlight" mode="targetbodycom" target="fish" diffuse=".8 .8 .8" specular="0.3 0.3 0.3" pos="0 -6 4" cutoff="30"/>
-        <!-- <light directional="true" diffuse=".3 .3 .3" specular=".2 .2 .2" pos="0 0 5" dir="0 0 -1"/> -->
+        <camera name="fixed" pos="0.4 -1.2 1.2" xyaxes="1 0 0 0 1 1"/>
+        <camera name="fixedTop" pos="-0.75 0 1.5" xyaxes="0 -1 0 1 0 0.75"/>
+        <camera name="fixedDiag" pos="0.75 -1 1" xyaxes="0.8 0.6 0 -0.4 0.5 0.75"/>
+        <camera pos="0.625 -0.592 0.720" xyaxes="0.758 0.653 -0.000 -0.468 0.544 0.697"/>
 
-        <body pos="0 0 0" name="fish">
+
+        <geom name="floor" pos="0 0 -0.2" size="0 0 1" type="plane" material="matplane"/>
+        <geom name="ceiling" pos="0 0 0.2" size="0 0 1" zaxis="0 0 -1" type="plane" rgba=".7 .1 .1 0"/>
+        <light directional="true" diffuse=".8 .8 .8" specular=".2 .2 .2" pos="0 0 5" dir="0 0 -1"/>
+
+        <body pos="0 0 0">
             <joint name="headX" pos="0.02432519 0 0.00306519" type="slide" axis="1 0 0" stiffness="0" damping="0"/>
             <joint name="headY" pos="0.02432519 0 0.00306519" type="slide" axis="0 1 0" stiffness="0" damping="0"/>
             <joint name="headZ" pos="0.02432519 0 0.00306519" type="slide" axis="0 0 1" stiffness="100" damping="10"/>
@@ -169,8 +165,6 @@
     
     </worldbody>
 
-
-
     <tendon>
         <spatial name="tendonLeft">
             <site site="bodyLeft"/>
@@ -192,7 +186,8 @@
 
     <actuator>
         <!-- <position name="motor" joint="motor" kp="1000" kv="10" ctrllimited="true" ctrlrange="-inf inf" forcerange="-100 100"/> -->
-        <velocity name="motor" joint="motor" kv="100" ctrllimited="true" ctrlrange="0 20"/>
+        <velocity name="motor" joint="motor" kv="100" ctrllimited="true" ctrlrange="-100 100" forcerange="-100 100"/>
     </actuator>
 
 </mujoco>
+        

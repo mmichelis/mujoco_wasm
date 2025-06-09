@@ -1,0 +1,399 @@
+
+<mujoco model="pendulum">
+    <option gravity="0 0 -9.81" integrator="implicit" timestep="0.0001" iterations="1000" solver="Newton" tolerance="1e-18" noslip_tolerance="1e-9" o_solref="0.001 1" o_solimp="0.5 0.999 0.0001 0.1 6">
+        <!-- <flag contact="disable"/> -->
+    </option>
+
+    <visual>
+        <global offheight="2160" offwidth="3840"/>
+        <rgba haze=".3 .3 .3 1"/>
+    </visual>
+
+    <asset>
+        <texture type="skybox" builtin="gradient" rgb1="0.6 0.6 0.6" rgb2="0 0 0" width="512" height="512"/>
+        <texture name="texplane" type="2d" builtin="checker" rgb1=".15 .2 .35" rgb2=".2 .3 .45" width="512" height="512" mark="cross" markrgb=".8 .8 .8"/>
+        <material name="matplane" reflectance="0.3" texture="texplane" texrepeat="1 1" texuniform="true"/>
+
+        <material name="plate" rgba=".9 .9 .9 .5"/>
+        <material name="pendulum" rgba=".9 .4 .1 .3"/>
+        <material name="mass" rgba=".1 .1 .1 1"/>
+    </asset>
+
+    <default>
+        <geom condim="3" friction="1 0.005 0.0001"/>
+    </default>
+
+
+    <worldbody>
+        <camera name="fixed" pos="0.31 -0.6 0.5" xyaxes="1 0 0 0 0.58 1"/>
+
+        <geom name="floor" pos="0 0 0" size="0 0 1" type="plane" material="matplane"/>
+        <light directional="true" diffuse=".8 .8 .8" specular=".2 .2 .2" pos="0 0 5" dir="0 0 -1"/>
+
+        <body pos="0 0 0.05">
+            <joint name="plate" type="slide" axis="1 0 0" pos="0 0 0"/>
+            <geom name="plate" type="box" pos="0.31 0.25 0" size="0.31 0.25 0.005" material="plate" mass="0.1"/>
+        </body>
+
+    
+        <body pos="0.07 0.04 0.055">
+            <joint name="p0_0boxX" type="slide" axis="1 0 0" pos="0 0 0"/>
+            <joint name="p0_0boxZ" type="slide" axis="0 0 1" pos="0 0 0"/>
+
+            <geom name="p0_0box" type="box" pos="0 0.02 0.075" size="0.03 0.02 0.075" material="pendulum" mass="0.1"/>
+            
+            <body pos="0 0 0.05">
+                <joint name="p0_0hinge" type="hinge" pos="0 0 -0.001" axis="0 1 0"/>
+                <geom name="p0_0hinge" type="cylinder" pos="0 -0.0001 -0.001" size="0.005 0.0001" zaxis="0 1 0" rgba=".7 .3 .1 1" mass= "0.001"/>
+
+                <geom name="p0_0stick" type="box" pos="0 -0.0012 0.02" size="0.002 0.001 0.06" material="mass" mass="0.001"/>
+
+                <geom name="p0_0massLower" type="cylinder" pos="0 -0.0012 -0.04" size="0.005 0.001" zaxis="0 1 0" material="mass" mass="0.3"/>
+                <geom name="p0_0massUpper" type="cylinder" pos="0 -0.0012 0.02" size="0.005 0.001" zaxis="0 1 0" material="mass" mass="0.1"/>
+            </body>
+        </body>
+                              
+            
+        <body pos="0.19 0.04 0.055">
+            <joint name="p0_1boxX" type="slide" axis="1 0 0" pos="0 0 0"/>
+            <joint name="p0_1boxZ" type="slide" axis="0 0 1" pos="0 0 0"/>
+
+            <geom name="p0_1box" type="box" pos="0 0.02 0.075" size="0.03 0.02 0.075" material="pendulum" mass="0.1"/>
+            
+            <body pos="0 0 0.05">
+                <joint name="p0_1hinge" type="hinge" pos="0 0 -0.001" axis="0 1 0"/>
+                <geom name="p0_1hinge" type="cylinder" pos="0 -0.0001 -0.001" size="0.005 0.0001" zaxis="0 1 0" rgba=".7 .3 .1 1" mass= "0.001"/>
+
+                <geom name="p0_1stick" type="box" pos="0 -0.0012 0.02" size="0.002 0.001 0.06" material="mass" mass="0.001"/>
+
+                <geom name="p0_1massLower" type="cylinder" pos="0 -0.0012 -0.04" size="0.005 0.001" zaxis="0 1 0" material="mass" mass="0.3"/>
+                <geom name="p0_1massUpper" type="cylinder" pos="0 -0.0012 0.02" size="0.005 0.001" zaxis="0 1 0" material="mass" mass="0.1"/>
+            </body>
+        </body>
+                              
+            
+        <body pos="0.31 0.04 0.055">
+            <joint name="p0_2boxX" type="slide" axis="1 0 0" pos="0 0 0"/>
+            <joint name="p0_2boxZ" type="slide" axis="0 0 1" pos="0 0 0"/>
+
+            <geom name="p0_2box" type="box" pos="0 0.02 0.075" size="0.03 0.02 0.075" material="pendulum" mass="0.1"/>
+            
+            <body pos="0 0 0.05">
+                <joint name="p0_2hinge" type="hinge" pos="0 0 -0.001" axis="0 1 0"/>
+                <geom name="p0_2hinge" type="cylinder" pos="0 -0.0001 -0.001" size="0.005 0.0001" zaxis="0 1 0" rgba=".7 .3 .1 1" mass= "0.001"/>
+
+                <geom name="p0_2stick" type="box" pos="0 -0.0012 0.02" size="0.002 0.001 0.06" material="mass" mass="0.001"/>
+
+                <geom name="p0_2massLower" type="cylinder" pos="0 -0.0012 -0.04" size="0.005 0.001" zaxis="0 1 0" material="mass" mass="0.3"/>
+                <geom name="p0_2massUpper" type="cylinder" pos="0 -0.0012 0.02" size="0.005 0.001" zaxis="0 1 0" material="mass" mass="0.1"/>
+            </body>
+        </body>
+                              
+            
+        <body pos="0.43 0.04 0.055">
+            <joint name="p0_3boxX" type="slide" axis="1 0 0" pos="0 0 0"/>
+            <joint name="p0_3boxZ" type="slide" axis="0 0 1" pos="0 0 0"/>
+
+            <geom name="p0_3box" type="box" pos="0 0.02 0.075" size="0.03 0.02 0.075" material="pendulum" mass="0.1"/>
+            
+            <body pos="0 0 0.05">
+                <joint name="p0_3hinge" type="hinge" pos="0 0 -0.001" axis="0 1 0"/>
+                <geom name="p0_3hinge" type="cylinder" pos="0 -0.0001 -0.001" size="0.005 0.0001" zaxis="0 1 0" rgba=".7 .3 .1 1" mass= "0.001"/>
+
+                <geom name="p0_3stick" type="box" pos="0 -0.0012 0.02" size="0.002 0.001 0.06" material="mass" mass="0.001"/>
+
+                <geom name="p0_3massLower" type="cylinder" pos="0 -0.0012 -0.04" size="0.005 0.001" zaxis="0 1 0" material="mass" mass="0.3"/>
+                <geom name="p0_3massUpper" type="cylinder" pos="0 -0.0012 0.02" size="0.005 0.001" zaxis="0 1 0" material="mass" mass="0.1"/>
+            </body>
+        </body>
+                              
+            
+        <body pos="0.55 0.04 0.055">
+            <joint name="p0_4boxX" type="slide" axis="1 0 0" pos="0 0 0"/>
+            <joint name="p0_4boxZ" type="slide" axis="0 0 1" pos="0 0 0"/>
+
+            <geom name="p0_4box" type="box" pos="0 0.02 0.075" size="0.03 0.02 0.075" material="pendulum" mass="0.1"/>
+            
+            <body pos="0 0 0.05">
+                <joint name="p0_4hinge" type="hinge" pos="0 0 -0.001" axis="0 1 0"/>
+                <geom name="p0_4hinge" type="cylinder" pos="0 -0.0001 -0.001" size="0.005 0.0001" zaxis="0 1 0" rgba=".7 .3 .1 1" mass= "0.001"/>
+
+                <geom name="p0_4stick" type="box" pos="0 -0.0012 0.02" size="0.002 0.001 0.06" material="mass" mass="0.001"/>
+
+                <geom name="p0_4massLower" type="cylinder" pos="0 -0.0012 -0.04" size="0.005 0.001" zaxis="0 1 0" material="mass" mass="0.3"/>
+                <geom name="p0_4massUpper" type="cylinder" pos="0 -0.0012 0.02" size="0.005 0.001" zaxis="0 1 0" material="mass" mass="0.1"/>
+            </body>
+        </body>
+                              
+            
+        <body pos="0.07 0.16 0.055">
+            <joint name="p1_0boxX" type="slide" axis="1 0 0" pos="0 0 0"/>
+            <joint name="p1_0boxZ" type="slide" axis="0 0 1" pos="0 0 0"/>
+
+            <geom name="p1_0box" type="box" pos="0 0.02 0.075" size="0.03 0.02 0.075" material="pendulum" mass="0.1"/>
+            
+            <body pos="0 0 0.05">
+                <joint name="p1_0hinge" type="hinge" pos="0 0 -0.001" axis="0 1 0"/>
+                <geom name="p1_0hinge" type="cylinder" pos="0 -0.0001 -0.001" size="0.005 0.0001" zaxis="0 1 0" rgba=".7 .3 .1 1" mass= "0.001"/>
+
+                <geom name="p1_0stick" type="box" pos="0 -0.0012 0.02" size="0.002 0.001 0.06" material="mass" mass="0.001"/>
+
+                <geom name="p1_0massLower" type="cylinder" pos="0 -0.0012 -0.04" size="0.005 0.001" zaxis="0 1 0" material="mass" mass="0.3"/>
+                <geom name="p1_0massUpper" type="cylinder" pos="0 -0.0012 0.02" size="0.005 0.001" zaxis="0 1 0" material="mass" mass="0.1"/>
+            </body>
+        </body>
+                              
+            
+        <body pos="0.19 0.16 0.055">
+            <joint name="p1_1boxX" type="slide" axis="1 0 0" pos="0 0 0"/>
+            <joint name="p1_1boxZ" type="slide" axis="0 0 1" pos="0 0 0"/>
+
+            <geom name="p1_1box" type="box" pos="0 0.02 0.075" size="0.03 0.02 0.075" material="pendulum" mass="0.1"/>
+            
+            <body pos="0 0 0.05">
+                <joint name="p1_1hinge" type="hinge" pos="0 0 -0.001" axis="0 1 0"/>
+                <geom name="p1_1hinge" type="cylinder" pos="0 -0.0001 -0.001" size="0.005 0.0001" zaxis="0 1 0" rgba=".7 .3 .1 1" mass= "0.001"/>
+
+                <geom name="p1_1stick" type="box" pos="0 -0.0012 0.02" size="0.002 0.001 0.06" material="mass" mass="0.001"/>
+
+                <geom name="p1_1massLower" type="cylinder" pos="0 -0.0012 -0.04" size="0.005 0.001" zaxis="0 1 0" material="mass" mass="0.3"/>
+                <geom name="p1_1massUpper" type="cylinder" pos="0 -0.0012 0.02" size="0.005 0.001" zaxis="0 1 0" material="mass" mass="0.1"/>
+            </body>
+        </body>
+                              
+            
+        <body pos="0.31 0.16 0.055">
+            <joint name="p1_2boxX" type="slide" axis="1 0 0" pos="0 0 0"/>
+            <joint name="p1_2boxZ" type="slide" axis="0 0 1" pos="0 0 0"/>
+
+            <geom name="p1_2box" type="box" pos="0 0.02 0.075" size="0.03 0.02 0.075" material="pendulum" mass="0.1"/>
+            
+            <body pos="0 0 0.05">
+                <joint name="p1_2hinge" type="hinge" pos="0 0 -0.001" axis="0 1 0"/>
+                <geom name="p1_2hinge" type="cylinder" pos="0 -0.0001 -0.001" size="0.005 0.0001" zaxis="0 1 0" rgba=".7 .3 .1 1" mass= "0.001"/>
+
+                <geom name="p1_2stick" type="box" pos="0 -0.0012 0.02" size="0.002 0.001 0.06" material="mass" mass="0.001"/>
+
+                <geom name="p1_2massLower" type="cylinder" pos="0 -0.0012 -0.04" size="0.005 0.001" zaxis="0 1 0" material="mass" mass="0.3"/>
+                <geom name="p1_2massUpper" type="cylinder" pos="0 -0.0012 0.02" size="0.005 0.001" zaxis="0 1 0" material="mass" mass="0.1"/>
+            </body>
+        </body>
+                              
+            
+        <body pos="0.43 0.16 0.055">
+            <joint name="p1_3boxX" type="slide" axis="1 0 0" pos="0 0 0"/>
+            <joint name="p1_3boxZ" type="slide" axis="0 0 1" pos="0 0 0"/>
+
+            <geom name="p1_3box" type="box" pos="0 0.02 0.075" size="0.03 0.02 0.075" material="pendulum" mass="0.1"/>
+            
+            <body pos="0 0 0.05">
+                <joint name="p1_3hinge" type="hinge" pos="0 0 -0.001" axis="0 1 0"/>
+                <geom name="p1_3hinge" type="cylinder" pos="0 -0.0001 -0.001" size="0.005 0.0001" zaxis="0 1 0" rgba=".7 .3 .1 1" mass= "0.001"/>
+
+                <geom name="p1_3stick" type="box" pos="0 -0.0012 0.02" size="0.002 0.001 0.06" material="mass" mass="0.001"/>
+
+                <geom name="p1_3massLower" type="cylinder" pos="0 -0.0012 -0.04" size="0.005 0.001" zaxis="0 1 0" material="mass" mass="0.3"/>
+                <geom name="p1_3massUpper" type="cylinder" pos="0 -0.0012 0.02" size="0.005 0.001" zaxis="0 1 0" material="mass" mass="0.1"/>
+            </body>
+        </body>
+                              
+            
+        <body pos="0.55 0.16 0.055">
+            <joint name="p1_4boxX" type="slide" axis="1 0 0" pos="0 0 0"/>
+            <joint name="p1_4boxZ" type="slide" axis="0 0 1" pos="0 0 0"/>
+
+            <geom name="p1_4box" type="box" pos="0 0.02 0.075" size="0.03 0.02 0.075" material="pendulum" mass="0.1"/>
+            
+            <body pos="0 0 0.05">
+                <joint name="p1_4hinge" type="hinge" pos="0 0 -0.001" axis="0 1 0"/>
+                <geom name="p1_4hinge" type="cylinder" pos="0 -0.0001 -0.001" size="0.005 0.0001" zaxis="0 1 0" rgba=".7 .3 .1 1" mass= "0.001"/>
+
+                <geom name="p1_4stick" type="box" pos="0 -0.0012 0.02" size="0.002 0.001 0.06" material="mass" mass="0.001"/>
+
+                <geom name="p1_4massLower" type="cylinder" pos="0 -0.0012 -0.04" size="0.005 0.001" zaxis="0 1 0" material="mass" mass="0.3"/>
+                <geom name="p1_4massUpper" type="cylinder" pos="0 -0.0012 0.02" size="0.005 0.001" zaxis="0 1 0" material="mass" mass="0.1"/>
+            </body>
+        </body>
+                              
+            
+        <body pos="0.07 0.27999999999999997 0.055">
+            <joint name="p2_0boxX" type="slide" axis="1 0 0" pos="0 0 0"/>
+            <joint name="p2_0boxZ" type="slide" axis="0 0 1" pos="0 0 0"/>
+
+            <geom name="p2_0box" type="box" pos="0 0.02 0.075" size="0.03 0.02 0.075" material="pendulum" mass="0.1"/>
+            
+            <body pos="0 0 0.05">
+                <joint name="p2_0hinge" type="hinge" pos="0 0 -0.001" axis="0 1 0"/>
+                <geom name="p2_0hinge" type="cylinder" pos="0 -0.0001 -0.001" size="0.005 0.0001" zaxis="0 1 0" rgba=".7 .3 .1 1" mass= "0.001"/>
+
+                <geom name="p2_0stick" type="box" pos="0 -0.0012 0.02" size="0.002 0.001 0.06" material="mass" mass="0.001"/>
+
+                <geom name="p2_0massLower" type="cylinder" pos="0 -0.0012 -0.04" size="0.005 0.001" zaxis="0 1 0" material="mass" mass="0.3"/>
+                <geom name="p2_0massUpper" type="cylinder" pos="0 -0.0012 0.02" size="0.005 0.001" zaxis="0 1 0" material="mass" mass="0.1"/>
+            </body>
+        </body>
+                              
+            
+        <body pos="0.19 0.27999999999999997 0.055">
+            <joint name="p2_1boxX" type="slide" axis="1 0 0" pos="0 0 0"/>
+            <joint name="p2_1boxZ" type="slide" axis="0 0 1" pos="0 0 0"/>
+
+            <geom name="p2_1box" type="box" pos="0 0.02 0.075" size="0.03 0.02 0.075" material="pendulum" mass="0.1"/>
+            
+            <body pos="0 0 0.05">
+                <joint name="p2_1hinge" type="hinge" pos="0 0 -0.001" axis="0 1 0"/>
+                <geom name="p2_1hinge" type="cylinder" pos="0 -0.0001 -0.001" size="0.005 0.0001" zaxis="0 1 0" rgba=".7 .3 .1 1" mass= "0.001"/>
+
+                <geom name="p2_1stick" type="box" pos="0 -0.0012 0.02" size="0.002 0.001 0.06" material="mass" mass="0.001"/>
+
+                <geom name="p2_1massLower" type="cylinder" pos="0 -0.0012 -0.04" size="0.005 0.001" zaxis="0 1 0" material="mass" mass="0.3"/>
+                <geom name="p2_1massUpper" type="cylinder" pos="0 -0.0012 0.02" size="0.005 0.001" zaxis="0 1 0" material="mass" mass="0.1"/>
+            </body>
+        </body>
+                              
+            
+        <body pos="0.31 0.27999999999999997 0.055">
+            <joint name="p2_2boxX" type="slide" axis="1 0 0" pos="0 0 0"/>
+            <joint name="p2_2boxZ" type="slide" axis="0 0 1" pos="0 0 0"/>
+
+            <geom name="p2_2box" type="box" pos="0 0.02 0.075" size="0.03 0.02 0.075" material="pendulum" mass="0.1"/>
+            
+            <body pos="0 0 0.05">
+                <joint name="p2_2hinge" type="hinge" pos="0 0 -0.001" axis="0 1 0"/>
+                <geom name="p2_2hinge" type="cylinder" pos="0 -0.0001 -0.001" size="0.005 0.0001" zaxis="0 1 0" rgba=".7 .3 .1 1" mass= "0.001"/>
+
+                <geom name="p2_2stick" type="box" pos="0 -0.0012 0.02" size="0.002 0.001 0.06" material="mass" mass="0.001"/>
+
+                <geom name="p2_2massLower" type="cylinder" pos="0 -0.0012 -0.04" size="0.005 0.001" zaxis="0 1 0" material="mass" mass="0.3"/>
+                <geom name="p2_2massUpper" type="cylinder" pos="0 -0.0012 0.02" size="0.005 0.001" zaxis="0 1 0" material="mass" mass="0.1"/>
+            </body>
+        </body>
+                              
+            
+        <body pos="0.43 0.27999999999999997 0.055">
+            <joint name="p2_3boxX" type="slide" axis="1 0 0" pos="0 0 0"/>
+            <joint name="p2_3boxZ" type="slide" axis="0 0 1" pos="0 0 0"/>
+
+            <geom name="p2_3box" type="box" pos="0 0.02 0.075" size="0.03 0.02 0.075" material="pendulum" mass="0.1"/>
+            
+            <body pos="0 0 0.05">
+                <joint name="p2_3hinge" type="hinge" pos="0 0 -0.001" axis="0 1 0"/>
+                <geom name="p2_3hinge" type="cylinder" pos="0 -0.0001 -0.001" size="0.005 0.0001" zaxis="0 1 0" rgba=".7 .3 .1 1" mass= "0.001"/>
+
+                <geom name="p2_3stick" type="box" pos="0 -0.0012 0.02" size="0.002 0.001 0.06" material="mass" mass="0.001"/>
+
+                <geom name="p2_3massLower" type="cylinder" pos="0 -0.0012 -0.04" size="0.005 0.001" zaxis="0 1 0" material="mass" mass="0.3"/>
+                <geom name="p2_3massUpper" type="cylinder" pos="0 -0.0012 0.02" size="0.005 0.001" zaxis="0 1 0" material="mass" mass="0.1"/>
+            </body>
+        </body>
+                              
+            
+        <body pos="0.55 0.27999999999999997 0.055">
+            <joint name="p2_4boxX" type="slide" axis="1 0 0" pos="0 0 0"/>
+            <joint name="p2_4boxZ" type="slide" axis="0 0 1" pos="0 0 0"/>
+
+            <geom name="p2_4box" type="box" pos="0 0.02 0.075" size="0.03 0.02 0.075" material="pendulum" mass="0.1"/>
+            
+            <body pos="0 0 0.05">
+                <joint name="p2_4hinge" type="hinge" pos="0 0 -0.001" axis="0 1 0"/>
+                <geom name="p2_4hinge" type="cylinder" pos="0 -0.0001 -0.001" size="0.005 0.0001" zaxis="0 1 0" rgba=".7 .3 .1 1" mass= "0.001"/>
+
+                <geom name="p2_4stick" type="box" pos="0 -0.0012 0.02" size="0.002 0.001 0.06" material="mass" mass="0.001"/>
+
+                <geom name="p2_4massLower" type="cylinder" pos="0 -0.0012 -0.04" size="0.005 0.001" zaxis="0 1 0" material="mass" mass="0.3"/>
+                <geom name="p2_4massUpper" type="cylinder" pos="0 -0.0012 0.02" size="0.005 0.001" zaxis="0 1 0" material="mass" mass="0.1"/>
+            </body>
+        </body>
+                              
+            
+        <body pos="0.07 0.39999999999999997 0.055">
+            <joint name="p3_0boxX" type="slide" axis="1 0 0" pos="0 0 0"/>
+            <joint name="p3_0boxZ" type="slide" axis="0 0 1" pos="0 0 0"/>
+
+            <geom name="p3_0box" type="box" pos="0 0.02 0.075" size="0.03 0.02 0.075" material="pendulum" mass="0.1"/>
+            
+            <body pos="0 0 0.05">
+                <joint name="p3_0hinge" type="hinge" pos="0 0 -0.001" axis="0 1 0"/>
+                <geom name="p3_0hinge" type="cylinder" pos="0 -0.0001 -0.001" size="0.005 0.0001" zaxis="0 1 0" rgba=".7 .3 .1 1" mass= "0.001"/>
+
+                <geom name="p3_0stick" type="box" pos="0 -0.0012 0.02" size="0.002 0.001 0.06" material="mass" mass="0.001"/>
+
+                <geom name="p3_0massLower" type="cylinder" pos="0 -0.0012 -0.04" size="0.005 0.001" zaxis="0 1 0" material="mass" mass="0.3"/>
+                <geom name="p3_0massUpper" type="cylinder" pos="0 -0.0012 0.02" size="0.005 0.001" zaxis="0 1 0" material="mass" mass="0.1"/>
+            </body>
+        </body>
+                              
+            
+        <body pos="0.19 0.39999999999999997 0.055">
+            <joint name="p3_1boxX" type="slide" axis="1 0 0" pos="0 0 0"/>
+            <joint name="p3_1boxZ" type="slide" axis="0 0 1" pos="0 0 0"/>
+
+            <geom name="p3_1box" type="box" pos="0 0.02 0.075" size="0.03 0.02 0.075" material="pendulum" mass="0.1"/>
+            
+            <body pos="0 0 0.05">
+                <joint name="p3_1hinge" type="hinge" pos="0 0 -0.001" axis="0 1 0"/>
+                <geom name="p3_1hinge" type="cylinder" pos="0 -0.0001 -0.001" size="0.005 0.0001" zaxis="0 1 0" rgba=".7 .3 .1 1" mass= "0.001"/>
+
+                <geom name="p3_1stick" type="box" pos="0 -0.0012 0.02" size="0.002 0.001 0.06" material="mass" mass="0.001"/>
+
+                <geom name="p3_1massLower" type="cylinder" pos="0 -0.0012 -0.04" size="0.005 0.001" zaxis="0 1 0" material="mass" mass="0.3"/>
+                <geom name="p3_1massUpper" type="cylinder" pos="0 -0.0012 0.02" size="0.005 0.001" zaxis="0 1 0" material="mass" mass="0.1"/>
+            </body>
+        </body>
+                              
+            
+        <body pos="0.31 0.39999999999999997 0.055">
+            <joint name="p3_2boxX" type="slide" axis="1 0 0" pos="0 0 0"/>
+            <joint name="p3_2boxZ" type="slide" axis="0 0 1" pos="0 0 0"/>
+
+            <geom name="p3_2box" type="box" pos="0 0.02 0.075" size="0.03 0.02 0.075" material="pendulum" mass="0.1"/>
+            
+            <body pos="0 0 0.05">
+                <joint name="p3_2hinge" type="hinge" pos="0 0 -0.001" axis="0 1 0"/>
+                <geom name="p3_2hinge" type="cylinder" pos="0 -0.0001 -0.001" size="0.005 0.0001" zaxis="0 1 0" rgba=".7 .3 .1 1" mass= "0.001"/>
+
+                <geom name="p3_2stick" type="box" pos="0 -0.0012 0.02" size="0.002 0.001 0.06" material="mass" mass="0.001"/>
+
+                <geom name="p3_2massLower" type="cylinder" pos="0 -0.0012 -0.04" size="0.005 0.001" zaxis="0 1 0" material="mass" mass="0.3"/>
+                <geom name="p3_2massUpper" type="cylinder" pos="0 -0.0012 0.02" size="0.005 0.001" zaxis="0 1 0" material="mass" mass="0.1"/>
+            </body>
+        </body>
+                              
+            
+        <body pos="0.43 0.39999999999999997 0.055">
+            <joint name="p3_3boxX" type="slide" axis="1 0 0" pos="0 0 0"/>
+            <joint name="p3_3boxZ" type="slide" axis="0 0 1" pos="0 0 0"/>
+
+            <geom name="p3_3box" type="box" pos="0 0.02 0.075" size="0.03 0.02 0.075" material="pendulum" mass="0.1"/>
+            
+            <body pos="0 0 0.05">
+                <joint name="p3_3hinge" type="hinge" pos="0 0 -0.001" axis="0 1 0"/>
+                <geom name="p3_3hinge" type="cylinder" pos="0 -0.0001 -0.001" size="0.005 0.0001" zaxis="0 1 0" rgba=".7 .3 .1 1" mass= "0.001"/>
+
+                <geom name="p3_3stick" type="box" pos="0 -0.0012 0.02" size="0.002 0.001 0.06" material="mass" mass="0.001"/>
+
+                <geom name="p3_3massLower" type="cylinder" pos="0 -0.0012 -0.04" size="0.005 0.001" zaxis="0 1 0" material="mass" mass="0.3"/>
+                <geom name="p3_3massUpper" type="cylinder" pos="0 -0.0012 0.02" size="0.005 0.001" zaxis="0 1 0" material="mass" mass="0.1"/>
+            </body>
+        </body>
+                              
+            
+        <body pos="0.55 0.39999999999999997 0.055">
+            <joint name="p3_4boxX" type="slide" axis="1 0 0" pos="0 0 0"/>
+            <joint name="p3_4boxZ" type="slide" axis="0 0 1" pos="0 0 0"/>
+
+            <geom name="p3_4box" type="box" pos="0 0.02 0.075" size="0.03 0.02 0.075" material="pendulum" mass="0.1"/>
+            
+            <body pos="0 0 0.05">
+                <joint name="p3_4hinge" type="hinge" pos="0 0 -0.001" axis="0 1 0"/>
+                <geom name="p3_4hinge" type="cylinder" pos="0 -0.0001 -0.001" size="0.005 0.0001" zaxis="0 1 0" rgba=".7 .3 .1 1" mass= "0.001"/>
+
+                <geom name="p3_4stick" type="box" pos="0 -0.0012 0.02" size="0.002 0.001 0.06" material="mass" mass="0.001"/>
+
+                <geom name="p3_4massLower" type="cylinder" pos="0 -0.0012 -0.04" size="0.005 0.001" zaxis="0 1 0" material="mass" mass="0.3"/>
+                <geom name="p3_4massUpper" type="cylinder" pos="0 -0.0012 0.02" size="0.005 0.001" zaxis="0 1 0" material="mass" mass="0.1"/>
+            </body>
+        </body>
+    </worldbody>
+</mujoco>
+    
